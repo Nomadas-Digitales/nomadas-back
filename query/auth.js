@@ -85,9 +85,26 @@ const keepAccessToken = async (db, token, id) => {
   }
 };
 
+const updateToken = async (
+  db,
+  token,
+  { email = "default", username = "bydefault" }
+) => {
+  try {
+    await db.query(
+      sql`UPDATE users SET activation_token = ${token} WHERE email LIKE ${email} OR username LIKE ${username}`
+    );
+    return true;
+  } catch (error) {
+    console.info("error at updateToken query:", error.message);
+    return false;
+  }
+};
+
 module.exports = {
   createUser,
   confirmUser,
   getUserByEmailOrUsername,
   keepAccessToken,
+  updateToken,
 };

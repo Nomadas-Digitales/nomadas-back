@@ -17,11 +17,24 @@ const confirmation = ({ to, username }) => ({
   subject: `${username}, tu cuenta ha sido verificada`,
   html: `
     <h2> Gracias por registrarte ${username} </h2>
-    <p> ${username}, esto es un template de plantilla </p>  
+    <p> Tu cuenta ha sido verificada ${username}. </p>
+    <p> Bienvenido ! </p>  
+  `,
+});
+
+const passwordUpdate = ({ email, token }) => ({
+  from: `" 🤟 Tutteam" ${process.env.MAIL_USER}`,
+  to: `${email}`,
+  subject: "Contraseña olvidada",
+  html: `
+  <h2>¿Has olvidado tu contraseña?</h2>
+  <p>Haz clicl <a href="${process.env.SERVER_URL}:${process.env.PORT}/auth/password/request?token=${token}&email=${email}"> aquí </a> para poder obtener una nueva contraseña</p>
+  <p>Gracias por tu confianza</p>
   `,
 });
 
 module.exports = {
   activation,
   confirmation,
+  passwordUpdate,
 };
