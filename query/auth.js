@@ -92,11 +92,23 @@ const updateToken = async (
 ) => {
   try {
     await db.query(
-      sql`UPDATE users SET activation_token = ${token} WHERE email LIKE ${email} OR username LIKE ${username}`
+      sql`UPDATE users SET confirmation_token = ${token} WHERE email LIKE ${email} OR username LIKE ${username}`
     );
     return true;
   } catch (error) {
     console.info("error at updateToken query:", error.message);
+    return false;
+  }
+};
+
+const getByToken = async (db, token) => {
+  try {
+    const { email, username } = await db.one(
+      sql`SELECT username, email FROM users WHERE confirmation_token LIKE ${token}`
+    );
+    return { email, username };
+  } catch (error) {
+    console.info("error at getByToken query:", error.message);
     return false;
   }
 };
@@ -107,4 +119,5 @@ module.exports = {
   getUserByEmailOrUsername,
   keepAccessToken,
   updateToken,
+  getByToken,
 };

@@ -21,4 +21,16 @@ const getUserData = async (db, { email, username }) => {
   }
 };
 
-module.exports = { getUserData };
+const updateUserPassword = async (db, user) => {
+  try {
+    await db.query(
+      sql`UPDATE users SET hash=${user.newHash}, confirmation_token=NULL WHERE email LIKE ${user.email}`
+    );
+    return true;
+  } catch (error) {
+    console.info("error at updateHash query:", error.message);
+    return false;
+  }
+};
+
+module.exports = { getUserData, updateUserPassword };
