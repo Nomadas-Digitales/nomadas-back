@@ -44,4 +44,50 @@ const confirmUser = async (db, { token }) => {
     return false;
   }
 };
-module.exports = { createUser, confirmUser };
+
+const getUserByEmailOrUsername = async (
+  db,
+  mail = "",
+  username = "",
+  comparationFn
+) => {
+  try {
+    const result = await db.one(
+      sql`SELECT email, username, hash, id FROM users WHERE email LIKE ${mail} OR username LIKE ${username}`
+    );
+
+    if (!result) {
+      throw new Error("invalid credentials");
+    }
+
+    const isValidPassword = await comparationFn(result.hash);
+
+    if (!isValidPassword) {
+      throw new Error("invalid credentials");
+    }
+
+    return result;
+  } catch (error) {
+    console.info("error at getUserByEmail query:", error.message);
+    return false;
+  }
+};
+
+const keepAccessToken = async (db, token, id) => {
+  try {
+    const result = await db.query(
+      sql`UPDATE users SET access_token=${token} WHERE id=${id}`
+    );
+    return result;
+  } catch (error) {
+    console.info("error at keepAccessToken query:", error.message);
+    return false;
+  }
+};
+
+module.exports = {
+  createUser,
+  confirmUser,
+  getUserByEmailOrUsername,
+  keepAccessToken,
+};

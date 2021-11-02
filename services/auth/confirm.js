@@ -3,7 +3,6 @@ const { sendMail } = require("../../helpers/mailer");
 
 module.exports = (db) => async (req, res, next) => {
   const { token } = req.params;
-  console.log("token", req.params);
 
   const [result] = await confirmUser(db, { token });
   if (!result) {
