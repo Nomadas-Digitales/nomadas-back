@@ -21,4 +21,27 @@ const userExist = async (db, { email, username }) => {
     `);
 };
 
-module.exports = { createUser };
+const confirmUser = async (db, { token }) => {
+  try {
+    return await db.transaction(async (tx) => {
+      const { rowCount, rows } = await tx.query(sql`
+        SELECT * FROM users
+        WHERE activation_token = ${token}
+      `);
+      if (!rowCount) throw new Error("invalid token");
+      await tx.query(sql`
+        UPDATE users
+        SET
+          activation_token = null
+  
+        WHERE
+          activation_token = ${token}
+      `);
+      return rows;
+    });
+  } catch (e) {
+    console.info('> Error at "confirmUser" query:', e.message);
+    return false;
+  }
+};
+module.exports = { createUser, confirmUser };
