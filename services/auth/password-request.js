@@ -6,10 +6,14 @@ const newPassword = (db) => async (req, res, next) => {
   const { email, token } = req.query;
   const { password } = req.body;
 
+  if (!password || !email || !token) {
+    return next({ statusCode: 400, error: new Error("Given data failed") });
+  }
+
   const userCheck = await getByToken(db, token);
 
   if (!userCheck || userCheck.email !== email) {
-    return next({ error: new Error("Invalid token.") });
+    return next({ statusCode: 400, error: new Error("Something went wrong.") });
   }
   const newHash = await hash.encrypt(password);
 

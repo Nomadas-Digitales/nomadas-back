@@ -6,7 +6,10 @@ module.exports = (db) => async (req, res, next) => {
   const { email, username, password } = req.body;
 
   if (!email || !username || !password) {
-    return next({ error: new Error("All fields are mandatory") });
+    return next({
+      statusCode: 400,
+      error: new Error("All fields are mandatory"),
+    });
   }
 
   const newHash = await hash.encrypt(password);
@@ -19,7 +22,7 @@ module.exports = (db) => async (req, res, next) => {
   });
   if (result === false) {
     return next({
-      statusCode: 400,
+      statusCode: 409,
       error: new Error("Username or email already in use"),
     });
   }

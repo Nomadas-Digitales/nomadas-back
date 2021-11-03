@@ -15,20 +15,25 @@ const createUser = async (db, { email, username, hash, token }) => {
 };
 
 const userExist = async (db, { email, username }) => {
-  return await db.maybeOne(sql`
+  try {
+    return await db.maybeOne(sql`
       SELECT * FROM users
       WHERE email = ${email} OR username = ${username}
     `);
+  } catch (error) {
+    console.info('> Error at "userExist" query:', error.message);
+    return false;
+  }
 };
 
 const confirmUser = async (db, { token }) => {
   try {
     return await db.transaction(async (tx) => {
-      const { rowCount, rows } = await tx.query(sql`
+      const result = await tx.maybeOne(sql`
         SELECT * FROM users
         WHERE activation_token = ${token}
       `);
-      if (!rowCount) throw new Error("invalid token");
+      if (!result) throw new Error("invalid token");
       await tx.query(sql`
         UPDATE users
         SET
@@ -37,10 +42,10 @@ const confirmUser = async (db, { token }) => {
         WHERE
           activation_token = ${token}
       `);
-      return rows;
+      return result;
     });
-  } catch (e) {
-    console.info('> Error at "confirmUser" query:', e.message);
+  } catch (error) {
+    console.info('> Error at "confirmUser" query:', error.message);
     return false;
   }
 };
@@ -85,14 +90,10 @@ const keepAccessToken = async (db, token, id) => {
   }
 };
 
-const updateToken = async (
-  db,
-  token,
-  { email = "default", username = "bydefault" }
-) => {
+const updateToken = async (db, token, { email = "default" }) => {
   try {
     await db.query(
-      sql`UPDATE users SET confirmation_token = ${token} WHERE email LIKE ${email} OR username LIKE ${username}`
+      sql`UPDATE users SET confirmation_token = ${token} WHERE email LIKE ${email}`
     );
     return true;
   } catch (error) {

@@ -8,7 +8,7 @@ const login = (db) => async (req, res, next) => {
   const { email, username, password } = req.body;
 
   if ((!email && !username) || !password) {
-    return next({ error: new Error("Given data failed") });
+    return next({ statusCode: 400, error: new Error("Given data failed") });
   }
 
   const user = await getUserByEmailOrUsername(
@@ -19,7 +19,7 @@ const login = (db) => async (req, res, next) => {
   );
 
   if (!user) {
-    return next({ error: new Error("Something went wrong") });
+    return next({ statusCode: 401, error: new Error("Something went wrong") });
   }
 
   const token = serialize(res, {

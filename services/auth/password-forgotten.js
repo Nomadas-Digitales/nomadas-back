@@ -4,21 +4,21 @@ const { getUserData } = require("../../query/user");
 const { updateToken } = require("../../query/auth");
 
 const passwordForgotten = (db) => async (req, res, next) => {
-  const { email, username } = req.body;
+  const { email } = req.body;
 
-  if (!email && !username) {
-    return next({ error: new Error("Given data failed.") });
+  if (!email) {
+    return next({ statusCode: 400, error: new Error("Given data failed.") });
   }
 
-  const user = await getUserData(db, { email, username });
+  const user = await getUserData(db, { email });
 
   if (!user) {
-    return next({ error: new Error("User does not exist.") });
+    return next({ statusCode: 400, error: new Error("User does not exist.") });
   }
 
   const token = await hash.createConfirmToken();
 
-  const newToken = await updateToken(db, token, { email, username });
+  const newToken = await updateToken(db, token, { email });
 
   if (!newToken) {
     return next({ error: new Error("Something went wrong.") });

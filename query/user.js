@@ -1,19 +1,12 @@
 const { sql } = require("slonik");
 
-const getUserData = async (db, { email, username }) => {
-  let whereClause = "";
-  if (username) {
-    whereClause = sql`WHERE username = ${username}`;
-  } else {
-    whereClause = sql`WHERE email = ${email}`;
-  }
-  console.log("whereClause", whereClause);
+const getUserData = async (db, { email }) => {
   try {
     const user = await db.maybeOne(sql`
               SELECT name, surname, username, email, access_token
-              FROM users ${whereClause}
+              FROM users WHERE email = ${email}
       `);
-    console.log("user query", user);
+
     return user;
   } catch (error) {
     console.info("Error at getUserData:", error.message);
