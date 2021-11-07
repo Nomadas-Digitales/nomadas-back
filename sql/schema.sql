@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS city (
   idCity INTEGER PRIMARY KEY,
   city VARCHAR(50),
   idCountry INTEGER, 
+  province VARCHAR(50),
   weather NUMERIC(18,7),
   safety SMALLINT,
   avgCost NUMERIC(18,2),
@@ -38,13 +39,10 @@ CREATE TABLE IF NOT EXISTS city (
 
 CREATE TABLE IF NOT EXISTS home (
   propertyCode INTEGER PRIMARY KEY,
-  address VARCHAR(100),
-  province VARCHAR(50),
-  city VARCHAR(50),
   idCity INTEGER references city(idCity),
+  address VARCHAR(100),
   district VARCHAR(50),
   neighborhood VARCHAR(50),
-  country VARCHAR(50),
   latitude NUMERIC(18,7),
   longitude NUMERIC(18,7),
   distance INTEGER,
