@@ -63,4 +63,4 @@ CREATE TABLE IF NOT EXISTS city (
   cyclingfriendly BOOLEAN,
   publicTransport BOOLEAN, 
   score INTEGER
-)
+);
