@@ -6,35 +6,6 @@ DROP EXTENSION IF EXISTS "uuid-ossp";
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-CREATE TABLE IF NOT EXISTS home (
-  propertyCode INTEGER PRIMARY KEY,
-  address VARCHAR(100),
-  province VARCHAR(50),
-  city VARCHAR(50),
-  idCity INTEGER references city(idCity),
-  district VARCHAR(50),
-  neighborhood VARCHAR(50),
-  country VARCHAR(50),
-  latitude NUMERIC(18,7),
-  longitude NUMERIC(18,7),
-  distance INTEGER,
-  distanceBeach INTEGER,
-  floor SMALLINT, 
-  price SMALLINT,
-  propertyType VARCHAR(50),
-  size SMALLINT,
-  exterior BOOLEAN,
-  rooms SMALLINT,
-  bathrooms SMALLINT,
-  status VARCHAR(50),
-  haslift BOOLEAN,
-  internet SMALLINT,
-  safety SMALLINT,
-  zonaTranquila BOOLEAN,
-  score INTEGER,
-  available BOOLEAN
-);
-
 CREATE TABLE IF NOT EXISTS users (
   userId uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
   firstName VARCHAR(50),
@@ -54,6 +25,7 @@ CREATE TABLE IF NOT EXISTS city (
   idCity INTEGER PRIMARY KEY,
   city VARCHAR(50),
   idCountry INTEGER, 
+  province VARCHAR(50),
   weather NUMERIC(18,7),
   safety SMALLINT,
   avgCost NUMERIC(18,2),
@@ -63,4 +35,30 @@ CREATE TABLE IF NOT EXISTS city (
   cyclingfriendly BOOLEAN,
   publicTransport BOOLEAN, 
   score INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS home (
+  propertyCode INTEGER PRIMARY KEY,
+  idCity INTEGER references city(idCity),
+  address VARCHAR(100),
+  district VARCHAR(50),
+  neighborhood VARCHAR(50),
+  latitude NUMERIC(18,7),
+  longitude NUMERIC(18,7),
+  distance INTEGER,
+  distanceBeach INTEGER,
+  floor SMALLINT, 
+  price SMALLINT,
+  propertyType VARCHAR(50),
+  size SMALLINT,
+  exterior BOOLEAN,
+  rooms SMALLINT,
+  bathrooms SMALLINT,
+  status VARCHAR(50),
+  haslift BOOLEAN,
+  internet SMALLINT,
+  safety SMALLINT,
+  zonaTranquila BOOLEAN,
+  score INTEGER,
+  available BOOLEAN
 );
