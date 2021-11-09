@@ -1,22 +1,38 @@
 const { sql } = require("slonik");
 
-const getHomes = async (db, { idCity }) => {
-  console.log("idCity in BD: ", idCity);
+const getHouseByCity = async (db, { id }) => {
+  
   try {
     const result = await db.query(sql`
             SELECT h.* 
             FROM city AS c
             INNER JOIN home AS h
             ON c.idcity=h.idcity
-            WHERE c.idcity = ${idCity}   
+            WHERE c.idcity = ${id}   
       `);
     return result.rows;
   } catch (error) {
-    console.info("Error at getHomes query: ", error.message);
+    console.info("Error at getHouseByCity query: ", error.message);
+    return false;
+  }
+};
+
+const getHome = async (db, { id }) => {
+  
+  try {
+    const result = await db.maybeOne(sql`
+            SELECT * 
+            FROM home
+            WHERE propertycode = ${id}   
+      `);
+    return result;
+  } catch (error) {
+    console.info("Error at getHome query: ", error.message);
     return false;
   }
 };
 
 module.exports = {
-  getHomes,
+  getHouseByCity,
+  getHome
 };
