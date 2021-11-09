@@ -1,0 +1,2 @@
+INSERT INTO city (idCity, city, idCountry, province, weather, safety, avgCost, fun, cooworking, sharemobility, cyclingfriendly, publicTransport, score)
+VALUES (1, 'Valencia', 1, 'Valencia', 18.0, 4, 2180, 4, True, True, True, True, 5);
