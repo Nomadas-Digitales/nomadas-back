@@ -59,6 +59,7 @@ CREATE TABLE IF NOT EXISTS home (
   internet SMALLINT,
   safety SMALLINT,
   zonaTranquila BOOLEAN,
+  distanceCoworking INTEGER,
   score INTEGER,
   available BOOLEAN
 );
