@@ -8,29 +8,27 @@ const getByFilters = async (
   distanceBeach,
   internet
 ) => {
-  const whereConditions = [];
+  const whereClause = [sql`TRUE`];
 
   if (distance) {
-    whereConditions.push(`distance < ${distance}`);
+    whereClause.push(sql`distance < ${distance}`);
   }
   if (priceMin) {
-    whereConditions.push(`price > ${priceMin}`);
+    whereClause.push(sql`price > ${priceMin}`);
   }
   if (priceMax) {
-    whereConditions.push(`price < ${priceMax}`);
+    whereClause.push(sql`price < ${priceMax}`);
   }
   if (distanceBeach) {
-    whereConditions.push(`distanceBeach < ${distanceBeach}`);
+    whereClause.push(sql`distanceBeach < ${distanceBeach}`);
   }
   if (internet) {
-    whereConditions.push(`internet > ${internet}`);
+    whereClause.push(sql`internet > ${internet}`);
   }
-
-  const whereClause = sql`${whereConditions.join(" AND ")}`;
 
   try {
     const results = await db.query(
-      sql`SELECT * FROM home WHERE ${whereClause}`
+      sql`SELECT * FROM home WHERE ${sql.join(whereClause, sql` AND `)} `
     );
 
     return results.rows;

@@ -1,9 +1,9 @@
-const { getByFilters } = require("");
+const { getByFilters } = require("../../query/home");
 
-module.exports = (db) => async (req, res) => {
+module.exports = (db) => async (req, res, next) => {
   const { distance, priceMin, priceMax, distanceBeach, internet } = req.query;
 
-  // me salto las validaciones de tipo de variable para correr
+  // me salto las validaciones de tipo de variable para correr. errores 400
 
   const result = await getByFilters(
     db,
@@ -16,8 +16,8 @@ module.exports = (db) => async (req, res) => {
 
   if (result === false) {
     return next({
-      statusCode: 404,
-      error: new Error("No results found"),
+      statusCode: 500,
+      error: new Error("An error occurs"),
     });
   }
 
