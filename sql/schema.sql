@@ -61,5 +61,6 @@ CREATE TABLE IF NOT EXISTS home (
   zonaTranquila BOOLEAN,
   distanceCoworking INTEGER,
   score INTEGER,
-  available BOOLEAN
+  available BOOLEAN,
+  thumbnail TEXT
 );

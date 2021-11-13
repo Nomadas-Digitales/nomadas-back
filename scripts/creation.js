@@ -63,7 +63,8 @@ const create = async () => {
       zonaTranquila BOOLEAN,
       distanceCoworking INTEGER,
       score INTEGER,
-      available BOOLEAN
+      available BOOLEAN,
+      thumbnail TEXT
     );
     `);
     console.info("> creation done! 🚀");
