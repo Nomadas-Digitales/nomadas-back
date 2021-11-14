@@ -1,7 +1,15 @@
 const { getByFilters } = require("../../query/home");
 
 module.exports = (db) => async (req, res, next) => {
-  const { distance, priceMin, priceMax, distanceBeach, internet } = req.query;
+  const {
+    distance,
+    priceMin,
+    priceMax,
+    distanceBeach,
+    internet,
+    page,
+    pageSize,
+  } = req.query;
 
   // me salto las validaciones de tipo de variable para correr. errores 400
 
@@ -11,7 +19,9 @@ module.exports = (db) => async (req, res, next) => {
     priceMin,
     priceMax,
     distanceBeach,
-    internet
+    internet,
+    page || 1,
+    pageSize || 20
   );
 
   if (result === false) {

@@ -1,7 +1,6 @@
 const { sql } = require("slonik");
 
 const getHouseByCity = async (db, { id }) => {
-  
   try {
     const result = await db.query(sql`
             SELECT h.* 
@@ -18,7 +17,6 @@ const getHouseByCity = async (db, { id }) => {
 };
 
 const getHome = async (db, { id }) => {
-  
   try {
     const result = await db.maybeOne(sql`
             SELECT * 
@@ -28,7 +26,8 @@ const getHome = async (db, { id }) => {
     return result;
   } catch (error) {
     console.info("Error at getHome query: ", error.message);
-  }}
+  }
+};
 
 const getByFilters = async (
   db,
@@ -36,7 +35,9 @@ const getByFilters = async (
   priceMin,
   priceMax,
   distanceBeach,
-  internet
+  internet,
+  page,
+  pageSize
 ) => {
   const whereClause = [sql`TRUE`];
 
@@ -58,7 +59,10 @@ const getByFilters = async (
 
   try {
     const results = await db.query(
-      sql`SELECT * FROM home WHERE ${sql.join(whereClause, sql` AND `)} `
+      sql`SELECT * FROM home WHERE ${sql.join(
+        whereClause,
+        sql` AND `
+      )} LIMIT ${pageSize} OFFSET ${(page - 1) * pageSize} `
     );
 
     return results.rows;
@@ -71,5 +75,5 @@ const getByFilters = async (
 module.exports = {
   getHouseByCity,
   getHome,
-  getByFilters
+  getByFilters,
 };
