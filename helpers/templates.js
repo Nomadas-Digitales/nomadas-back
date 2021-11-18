@@ -5,7 +5,7 @@ const activation = ({ to, token }) => ({
   html: `
       <h2>Un último paso</h2>
       <p>Para confirmar tu cuenta, haz clic aquí: 
-      <a href="${process.env.SERVER_URL}:${process.env.PORT}/auth/confirmation/${token}" target="_blank"> ${process.env.SERVER_URL}:${process.env.PORT}/auth/confirmation/${token} </a>
+      <a href="${process.env.VERCEL_URL}:${process.env.PORT}/auth/confirmation/${token}" target="_blank"> ${process.env.VERCEL_URL}:${process.env.PORT}/auth/confirmation/${token} </a>
       </p>
       <p>Muchas gracias.</p>
     `,
@@ -28,7 +28,7 @@ const passwordUpdate = ({ email, token }) => ({
   subject: "Contraseña olvidada",
   html: `
   <h2>¿Has olvidado tu contraseña?</h2>
-  <p>Haz clicl <a href="${process.env.SERVER_URL}:${process.env.PORT}/auth/password/request?token=${token}&email=${email}"> aquí </a> para poder obtener una nueva contraseña</p>
+  <p>Haz clicl <a href="${process.env.VERCEL_URL}:${process.env.PORT}/auth/password/request?token=${token}&email=${email}"> aquí </a> para poder obtener una nueva contraseña</p>
   <p>Gracias por tu confianza</p>
   `,
 });
