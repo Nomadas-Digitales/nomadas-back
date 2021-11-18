@@ -32,7 +32,6 @@ const passwordUpdate = ({ email, token }) => ({
   <p>Gracias por tu confianza</p>
   `,
 });
-
 module.exports = {
   activation,
   confirmation,
