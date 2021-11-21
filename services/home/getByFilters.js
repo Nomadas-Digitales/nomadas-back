@@ -7,6 +7,8 @@ module.exports = (db) => async (req, res, next) => {
     priceMax,
     distanceBeach,
     internet,
+    sizeMax,
+    sizeMin,
     page,
     pageSize,
   } = req.query;
@@ -18,6 +20,8 @@ module.exports = (db) => async (req, res, next) => {
     distance,
     priceMin,
     priceMax,
+    sizeMax,
+    sizeMin,
     distanceBeach,
     internet,
     page || 1,

@@ -36,6 +36,8 @@ const getByFilters = async (
   priceMax,
   distanceBeach,
   internet,
+  sizeMax,
+  sizeMin,
   page,
   pageSize
 ) => {
@@ -55,6 +57,12 @@ const getByFilters = async (
   }
   if (internet) {
     whereClause.push(sql`internet > ${internet}`);
+  }
+  if (sizeMax) {
+    whereClause.push(sql`size < ${sizeMax}`);
+  }
+  if (sizeMin) {
+    whereClause.push(sql`size > ${sizeMin}`);
   }
 
   try {
