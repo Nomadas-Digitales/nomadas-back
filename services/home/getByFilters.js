@@ -9,6 +9,7 @@ module.exports = (db) => async (req, res, next) => {
     internet,
     sizeMax,
     sizeMin,
+    distanceCoworking,
     page,
     pageSize,
   } = req.query;
@@ -25,6 +26,7 @@ module.exports = (db) => async (req, res, next) => {
       sizeMin,
       distanceBeach,
       internet,
+      distanceCoworking,
     },
     page || 1,
     pageSize || 20
