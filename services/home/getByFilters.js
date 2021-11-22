@@ -17,13 +17,15 @@ module.exports = (db) => async (req, res, next) => {
 
   const result = await getByFilters(
     db,
-    distance,
-    priceMin,
-    priceMax,
-    sizeMax,
-    sizeMin,
-    distanceBeach,
-    internet,
+    {
+      distance,
+      priceMin,
+      priceMax,
+      sizeMax,
+      sizeMin,
+      distanceBeach,
+      internet,
+    },
     page || 1,
     pageSize || 20
   );

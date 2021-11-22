@@ -31,13 +31,7 @@ const getHome = async (db, { id }) => {
 
 const getByFilters = async (
   db,
-  distance,
-  priceMin,
-  priceMax,
-  distanceBeach,
-  internet,
-  sizeMax,
-  sizeMin,
+  { distance, priceMin, priceMax, distanceBeach, internet, sizeMax, sizeMin },
   page,
   pageSize
 ) => {
@@ -64,6 +58,7 @@ const getByFilters = async (
   if (sizeMin) {
     whereClause.push(sql`size > ${sizeMin}`);
   }
+  console.log("clause", whereClause);
 
   try {
     const results = await db.query(
