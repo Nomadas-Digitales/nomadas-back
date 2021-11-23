@@ -37,7 +37,8 @@ const getByPrice = async (db, price) => {
     const result = await db.query(sql`
     SELECT * 
     FROM home
-    WHERE price BETWEEN ${minrange} AND ${maxrange};  
+    WHERE price BETWEEN ${minrange} AND ${maxrange}
+    LIMIT 4 
 `);
     return result.rows;
   } catch (error) {
