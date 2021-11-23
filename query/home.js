@@ -29,6 +29,22 @@ const getHome = async (db, { id }) => {
   }
 };
 
+const getByPrice = async (db, price) => {
+  const maxrange = price + 50;
+  const minrange = price - 50;
+  console.log("minrange", minrange);
+  try {
+    const result = await db.query(sql`
+    SELECT * 
+    FROM home
+    WHERE price BETWEEN ${minrange} AND ${maxrange};  
+`);
+    return result.rows;
+  } catch (error) {
+    console.info("Error at getByPrice query: ", error.message);
+  }
+};
+
 const getByFilters = async (
   db,
   {
@@ -90,4 +106,5 @@ module.exports = {
   getHouseByCity,
   getHome,
   getByFilters,
+  getByPrice,
 };
