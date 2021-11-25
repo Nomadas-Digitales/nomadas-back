@@ -5,7 +5,7 @@ const activation = ({ to, token }) => ({
   html: `
       <h2>Un último paso</h2>
       <p>Para confirmar tu cuenta, haz clic aquí: 
-      <a href="${process.env.VERCEL_URL}/passwordUpdate/confirmation/${token}" target="_blank"> ${process.env.VERCEL_URL}/passwordUpdate/confirmation/${token} </a>
+      <a href="${process.env.VERCEL_URL}:${process.env.PORT}/auth/confirmation/${token}" target="_blank"> ${process.env.VERCEL_URL}/passwordUpdate/confirmation/${token} </a>
       </p>
       <p>Muchas gracias.</p>
     `,

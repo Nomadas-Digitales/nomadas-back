@@ -7,11 +7,11 @@ DROP EXTENSION IF EXISTS "uuid-ossp";
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE IF NOT EXISTS users (
-  userId uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
   firstName VARCHAR(50),
   lastName VARCHAR(50),
-  hash VARCHAR(20) NOT NULL,
-  email VARCHAR(50) UNIQUE NOT NULL,
+  hash TEXT NOT NULL,
+  email TEXT UNIQUE NOT NULL,
   username TEXT UNIQUE NOT NULL,
   gender VARCHAR(1),
   birthDate DATE,

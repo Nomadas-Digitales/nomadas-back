@@ -73,7 +73,7 @@ const getUserByEmailOrUsername = async (
 
     return result;
   } catch (error) {
-    console.info("error at getUserByEmail query:", error.message);
+    console.info("error at getUserByEmailOrUsername query:", error.message);
     return false;
   }
 };
