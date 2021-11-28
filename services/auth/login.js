@@ -35,7 +35,7 @@ const login = (db) => async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: { access_token: token },
+    data: { access_token: token, id: user.id },
   });
 };
 
