@@ -14,8 +14,13 @@ const seed = async () => {
     const cities = fs.readFileSync(
       path.resolve(__dirname, "../sql", "inserts_city.sql")
     );
+    const updateHouses = fs.readFileSync(
+      path.resolve(__dirname, "../sql", "update_home_valencia.sql")
+    );
+
     await db.query(sql`${raw(cities.toString())}`);
     await db.query(sql`${raw(houses.toString())}`);
+    await db.query(sql`${raw(updateHouses.toString())}`);
 
     console.info("> insertion done! 🚀");
   } catch (error) {
